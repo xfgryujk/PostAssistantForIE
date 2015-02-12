@@ -1,4 +1,4 @@
-PostAssistant
+PostAssistantForIE
 =========
 
 在[百度贴吧](http://tieba.baidu.com/)发帖自动加上签名<br>
