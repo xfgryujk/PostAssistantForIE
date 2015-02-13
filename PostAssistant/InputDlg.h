@@ -4,7 +4,7 @@
 
 // CInputDlg ¶Ô»°¿ò
 
-class CInputDlg : public CDialogEx
+class CInputDlg : public CDialog
 {
 	DECLARE_DYNAMIC(CInputDlg)
 

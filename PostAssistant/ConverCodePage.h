@@ -4,7 +4,7 @@
 
 // CConverCodePage ¶Ô»°¿ò
 
-class CConverCodePage : public CDialogEx
+class CConverCodePage : public CDialog
 {
 	DECLARE_DYNAMIC(CConverCodePage)
 

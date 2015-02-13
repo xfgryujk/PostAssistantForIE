@@ -4,7 +4,7 @@
 
 // CRichTextSignPage ¶Ô»°¿ò
 
-class CRichTextSignPage : public CDialogEx
+class CRichTextSignPage : public CDialog
 {
 	DECLARE_DYNAMIC(CRichTextSignPage)
 

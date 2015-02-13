@@ -4,7 +4,7 @@
 
 // CSettingPage ¶Ô»°¿ò
 
-class CSettingPage : public CDialogEx
+class CSettingPage : public CDialog
 {
 	DECLARE_DYNAMIC(CSettingPage)
 

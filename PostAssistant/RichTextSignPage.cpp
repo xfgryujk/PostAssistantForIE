@@ -13,10 +13,10 @@ static const int TIMER_ID = 0;
 
 // CRichTextSignPage ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CRichTextSignPage, CDialogEx)
+IMPLEMENT_DYNAMIC(CRichTextSignPage, CDialog)
 
 CRichTextSignPage::CRichTextSignPage(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CRichTextSignPage::IDD, pParent)
+	: CDialog(CRichTextSignPage::IDD, pParent)
 {
 
 	m_restRichTextSigns = 0;
@@ -28,13 +28,13 @@ CRichTextSignPage::~CRichTextSignPage()
 
 void CRichTextSignPage::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_edit);
 	DDX_Control(pDX, IDC_STATIC1, m_static);
 }
 
 
-BEGIN_MESSAGE_MAP(CRichTextSignPage, CDialogEx)
+BEGIN_MESSAGE_MAP(CRichTextSignPage, CDialog)
 	ON_WM_CLOSE()
 	ON_WM_CTLCOLOR()
 	ON_WM_TIMER()
@@ -66,7 +66,7 @@ void CRichTextSignPage::OnClose()
 
 void CRichTextSignPage::OnSize(UINT nType, int cx, int cy)
 {
-	CDialogEx::OnSize(nType, cx, cy);
+	CDialog::OnSize(nType, cx, cy);
 
 	CRect rect;
 	GetClientRect(&rect); // Ä¬ÈÏ343 * 216
@@ -79,7 +79,7 @@ void CRichTextSignPage::OnSize(UINT nType, int cx, int cy)
 
 HBRUSH CRichTextSignPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
 
 	if (pWnd->m_hWnd == m_static.m_hWnd)
 		pDC->SetTextColor(RGB(255, 0, 0));
@@ -108,7 +108,7 @@ void CRichTextSignPage::OnTimer(UINT_PTR nIDEvent)
 		file.Close();
 	}
 
-	CDialogEx::OnTimer(nIDEvent);
+	CDialog::OnTimer(nIDEvent);
 }
 
 void CRichTextSignPage::UpdateRichTextSigns()

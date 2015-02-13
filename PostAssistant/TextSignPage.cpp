@@ -13,10 +13,10 @@ static const int TIMER_ID = 0;
 
 // CTextSignPage ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CTextSignPage, CDialogEx)
+IMPLEMENT_DYNAMIC(CTextSignPage, CDialog)
 
 CTextSignPage::CTextSignPage(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CTextSignPage::IDD, pParent)
+	: CDialog(CTextSignPage::IDD, pParent)
 {
 
 	m_restTextSigns = 0;
@@ -28,13 +28,13 @@ CTextSignPage::~CTextSignPage()
 
 void CTextSignPage::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_edit);
 	DDX_Control(pDX, IDC_STATIC1, m_static);
 }
 
 
-BEGIN_MESSAGE_MAP(CTextSignPage, CDialogEx)
+BEGIN_MESSAGE_MAP(CTextSignPage, CDialog)
 	ON_WM_CLOSE()
 	ON_WM_TIMER()
 	ON_EN_CHANGE(IDC_EDIT1, &CTextSignPage::OnEnChangeEdit1)
@@ -65,7 +65,7 @@ void CTextSignPage::OnClose()
 
 void CTextSignPage::OnSize(UINT nType, int cx, int cy)
 {
-	CDialogEx::OnSize(nType, cx, cy);
+	CDialog::OnSize(nType, cx, cy);
 
 	CRect rect;
 	GetClientRect(&rect); // Ä¬ÈÏ343 * 216
@@ -97,7 +97,7 @@ void CTextSignPage::OnTimer(UINT_PTR nIDEvent)
 		file.Close();
 	}
 
-	CDialogEx::OnTimer(nIDEvent);
+	CDialog::OnTimer(nIDEvent);
 }
 
 void CTextSignPage::UpdateTextSigns()

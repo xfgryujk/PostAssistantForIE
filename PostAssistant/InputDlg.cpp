@@ -9,16 +9,16 @@
 
 // CInputDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CInputDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CInputDlg, CDialog)
 
 CInputDlg::CInputDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CInputDlg::IDD, pParent)
+	: CDialog(CInputDlg::IDD, pParent)
 {
 	m_content = NULL;
 }
 
 CInputDlg::CInputDlg(const CString& staticCapital, CString* content, CWnd* pParent /*=NULL*/)
-: CDialogEx(CInputDlg::IDD, pParent)
+: CDialog(CInputDlg::IDD, pParent)
 {
 	m_staticCapital = staticCapital;
 	m_content       = content;
@@ -30,13 +30,13 @@ CInputDlg::~CInputDlg()
 
 void CInputDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_edit);
 	DDX_Control(pDX, IDC_STATIC1, m_static);
 }
 
 
-BEGIN_MESSAGE_MAP(CInputDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CInputDlg, CDialog)
 END_MESSAGE_MAP()
 
 
@@ -61,5 +61,5 @@ void CInputDlg::OnOK()
 	if (m_content != NULL)
 		m_edit.GetWindowText(*m_content);
 
-	CDialogEx::OnOK();
+	CDialog::OnOK();
 }

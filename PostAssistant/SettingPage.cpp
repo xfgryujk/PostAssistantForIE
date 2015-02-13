@@ -10,10 +10,10 @@
 
 // CSettingPage 对话框
 
-IMPLEMENT_DYNAMIC(CSettingPage, CDialogEx)
+IMPLEMENT_DYNAMIC(CSettingPage, CDialog)
 
 CSettingPage::CSettingPage(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CSettingPage::IDD, pParent)
+	: CDialog(CSettingPage::IDD, pParent)
 {
 
 }
@@ -25,7 +25,7 @@ CSettingPage::~CSettingPage()
 
 void CSettingPage::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_CHECK1, m_textSignCheck);
 	DDX_Control(pDX, IDC_CHECK2, m_richTextSignCheck);
 	DDX_Control(pDX, IDC_CHECK3, m_autoRunCheck);
@@ -35,7 +35,7 @@ void CSettingPage::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CSettingPage, CDialogEx)
+BEGIN_MESSAGE_MAP(CSettingPage, CDialog)
 	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_CHECK1, &CSettingPage::OnBnClickedCheck1)
 	ON_BN_CLICKED(IDC_CHECK2, &CSettingPage::OnBnClickedCheck2)
@@ -72,7 +72,7 @@ void CSettingPage::OnClose()
 
 BOOL CSettingPage::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CDialog::OnInitDialog();
 
 	// 初始化热键组合框
 	for (TCHAR text[] = _T("A"); text[0] <= _T('Z'); text[0]++)

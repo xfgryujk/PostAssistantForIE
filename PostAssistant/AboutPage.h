@@ -5,7 +5,7 @@
 
 // CAboutPage ¶Ô»°¿ò
 
-class CAboutPage : public CDialogEx
+class CAboutPage : public CDialog
 {
 	DECLARE_DYNAMIC(CAboutPage)
 

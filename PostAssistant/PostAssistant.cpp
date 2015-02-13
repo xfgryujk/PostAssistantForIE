@@ -52,7 +52,7 @@ BOOL CPostAssistantApp::InitInstance()
 	CWinApp::InitInstance();
 
 
-	AfxEnableControlContainer();
+	//AfxEnableControlContainer();
 
 
 	// 标准初始化

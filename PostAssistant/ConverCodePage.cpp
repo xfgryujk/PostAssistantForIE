@@ -9,10 +9,10 @@
 
 // CConverCodePage ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CConverCodePage, CDialogEx)
+IMPLEMENT_DYNAMIC(CConverCodePage, CDialog)
 
 CConverCodePage::CConverCodePage(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CConverCodePage::IDD, pParent)
+	: CDialog(CConverCodePage::IDD, pParent)
 {
 
 }
@@ -23,7 +23,7 @@ CConverCodePage::~CConverCodePage()
 
 void CConverCodePage::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_BUTTON1, m_hexUnicodeButton);
 	DDX_Control(pDX, IDC_BUTTON2, m_decimalUnicodeButton);
 	DDX_Control(pDX, IDC_BUTTON3, m_URL_GBKButton);
@@ -32,7 +32,7 @@ void CConverCodePage::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CConverCodePage, CDialogEx)
+BEGIN_MESSAGE_MAP(CConverCodePage, CDialog)
 	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON1, &CConverCodePage::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CConverCodePage::OnBnClickedButton2)

@@ -9,10 +9,10 @@
 
 // CAboutPage 对话框
 
-IMPLEMENT_DYNAMIC(CAboutPage, CDialogEx)
+IMPLEMENT_DYNAMIC(CAboutPage, CDialog)
 
 CAboutPage::CAboutPage(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CAboutPage::IDD, pParent)
+	: CDialog(CAboutPage::IDD, pParent)
 {
 
 }
@@ -23,13 +23,13 @@ CAboutPage::~CAboutPage()
 
 void CAboutPage::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_edit);
 	DDX_Control(pDX, IDC_MFCLINK1, m_link);
 }
 
 
-BEGIN_MESSAGE_MAP(CAboutPage, CDialogEx)
+BEGIN_MESSAGE_MAP(CAboutPage, CDialog)
 	ON_WM_CLOSE()
 	ON_WM_SIZE()
 END_MESSAGE_MAP()
@@ -58,7 +58,7 @@ void CAboutPage::OnClose()
 
 void CAboutPage::OnSize(UINT nType, int cx, int cy)
 {
-	CDialogEx::OnSize(nType, cx, cy);
+	CDialog::OnSize(nType, cx, cy);
 
 	CRect rect;
 	GetClientRect(&rect); // 默认343 * 216
@@ -71,7 +71,7 @@ void CAboutPage::OnSize(UINT nType, int cx, int cy)
 
 BOOL CAboutPage::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CDialog::OnInitDialog();
 
 	m_edit.SetWindowText(_T("设置好后用热键发贴\r\n\
 ~~~~~~~~~~~~~~~~~~\r\n\
