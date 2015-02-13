@@ -444,8 +444,8 @@ void CPostAssistantDlg::HTMLPost()
 // JS¼ÓÉÏÇ©Ãû
 void CPostAssistantDlg::AddSign(CString& script)
 {
-	BOOL hasTextSign = m_settingPage.m_textSignCheck.GetCheck() && m_textSignPage.m_textSigns.GetSize() > 0;
-	BOOL hasRichTextSign = m_settingPage.m_richTextSignCheck.GetCheck() && m_richTextSignPage.m_richTextSigns.GetSize() > 0;
+	BOOL hasTextSign = m_settingPage.m_textSignCheck.GetCheck() && m_textSignPage.m_edit.GetWindowTextLengthW() > 0;
+	BOOL hasRichTextSign = m_settingPage.m_richTextSignCheck.GetCheck() && m_richTextSignPage.m_edit.GetWindowTextLengthW() > 0;
 	if (!hasTextSign && !hasRichTextSign)
 		return;
 

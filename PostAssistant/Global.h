@@ -21,10 +21,10 @@ CString ReplaceString(const CString& src, LPCTSTR oldString, LPCTSTR newString);
 BOOL GetIEDocument(CComPtr<IHTMLDocument2>& spDoc);
 HRESULT EvalJS(CComPtr<IHTMLDocument2>& document, LPCTSTR script, VARIANT* ret = NULL);
 
-// 取[0, max]随机数
+// 取[0, max - 1]随机数
 inline int rand(int max)
 {
-	return (int)((float)rand() / (RAND_MAX + 1) * (max + 1));
+	return (int)((float)rand() / (RAND_MAX + 1) * max);
 }
 
 // 不重复取随机成员
