@@ -1,6 +1,7 @@
 #pragma once
 #include "afxwin.h"
 #include "afxlinkctrl.h"
+#include "TextButton.h"
 
 
 // CAboutPage ¶Ô»°¿ò
@@ -26,7 +27,8 @@ public:
 	virtual void OnOK();
 	afx_msg void OnClose();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnStnClickedStatic1();
 
 	CEdit m_edit;
-	CMFCLinkCtrl m_link;
+	CTextButton m_link;
 };

@@ -25,13 +25,14 @@ void CAboutPage::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_edit);
-	DDX_Control(pDX, IDC_MFCLINK1, m_link);
+	DDX_Control(pDX, IDC_STATIC1, m_link);
 }
 
 
 BEGIN_MESSAGE_MAP(CAboutPage, CDialog)
 	ON_WM_CLOSE()
 	ON_WM_SIZE()
+	ON_STN_CLICKED(IDC_STATIC1, &CAboutPage::OnStnClickedStatic1)
 END_MESSAGE_MAP()
 
 
@@ -84,4 +85,9 @@ BOOL CAboutPage::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常:  OCX 属性页应返回 FALSE
+}
+
+void CAboutPage::OnStnClickedStatic1()
+{
+	ShellExecute(NULL, _T("open"), _T("http://tieba.baidu.com/i/37897560"), NULL, NULL, SW_NORMAL);
 }

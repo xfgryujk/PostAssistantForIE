@@ -63,6 +63,9 @@
     <ClInclude Include="TextSignPage.h">
       <Filter>头文件\Dialog\Main</Filter>
     </ClInclude>
+    <ClInclude Include="TextButton.h">
+      <Filter>头文件\Dialog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PostAssistant.cpp">
@@ -94,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="SettingPage.cpp">
       <Filter>源文件\Dialog\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="TextButton.cpp">
+      <Filter>源文件\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
