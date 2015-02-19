@@ -104,7 +104,7 @@ void CTextSignPage::UpdateTextSigns()
 {
 	CString text;
 	m_edit.GetWindowText(text);
-	SliptString(m_textSigns, text, _T("\r\n"));
+	SplitString(m_textSigns, text, _T("\r\n"));
 	m_restTextSigns = m_textSigns.GetSize();
 }
 

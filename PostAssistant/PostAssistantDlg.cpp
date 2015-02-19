@@ -76,7 +76,7 @@ CPostAssistantDlg::CPostAssistantDlg(CWnd* pParent /*=NULL*/)
 
 	// 初始化托盘图标数据
 	m_nfData.cbSize				= sizeof(NOTIFYICONDATA);
-	m_nfData.hIcon				= AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_nfData.hIcon				= m_hIcon;
 	_tcscpy_s(m_nfData.szTip, _T("发贴助手"));
 	m_nfData.uCallbackMessage	= WM_TRAY;
 	m_nfData.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
@@ -118,7 +118,7 @@ void CPostAssistantDlg::OnPaint()
 	{
 		first = FALSE;
 		CStringArray argv;
-		SliptString(argv, AfxGetApp()->m_lpCmdLine, _T(" "));
+		SplitString(argv, AfxGetApp()->m_lpCmdLine, _T(" "));
 		for (int i = 0; i < argv.GetSize(); i++)
 			if (argv[i].MakeLower() == _T("-hide")) // 初始隐藏窗口，放在OnInitDialog无效
 			{
@@ -295,7 +295,7 @@ void CPostAssistantDlg::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 
 	int index = m_tab.GetCurSel();
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < _countof(m_pages); i++)
 		m_pages[i]->ShowWindow(i == index ? SW_SHOW : SW_HIDE);
 }
 
@@ -424,9 +424,9 @@ void CPostAssistantDlg::HTMLPost()
 		if (inputDlg.DoModal() == IDOK && content != _T(""))
 		{
 			// 转义
-			content = ReplaceString(content, _T("\r\n"), _T("<br>"));
-			content = ReplaceString(content, _T("\\"), _T("\\\\"));
-			content = ReplaceString(content, _T("'"), _T("\\'"));
+			content.Replace(_T("\r\n"), _T("<br>"));
+			content.Replace(_T("\\"), _T("\\\\"));
+			content.Replace(_T("'"), _T("\\'"));
 
 			CString script = NO_OLD_CONTENT_POST_SCRIPT1 + content;
 			AddSign(script);

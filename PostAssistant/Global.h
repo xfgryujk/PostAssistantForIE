@@ -14,8 +14,7 @@ static const int HOTKEY_HTML_POST = 2;
 
 
 // ×Ö·û´®²Ù×÷
-void SliptString(CStringArray& dst, const CString& src, LPCTSTR slipt);
-CString ReplaceString(const CString& src, LPCTSTR oldString, LPCTSTR newString);
+void SplitString(CStringArray& dst, const CString& src, LPCTSTR slipt);
 
 // ÍøÒ³²Ù×÷
 BOOL GetIEDocument(CComPtr<IHTMLDocument2>& spDoc);

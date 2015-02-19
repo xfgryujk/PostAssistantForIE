@@ -8,7 +8,7 @@ CString PROFILE_PATH;
 
 
 // 分割字符串
-void SliptString(CStringArray& dst, const CString& src, LPCTSTR slipt)
+void SplitString(CStringArray& dst, const CString& src, LPCTSTR slipt)
 {
 	dst.RemoveAll();
 	const int len = _tcslen(slipt);
@@ -75,7 +75,7 @@ static BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam)
 	}
 	else
 		return TRUE;
-};
+}
 
 // 取鼠标位置IE网页文档接口
 BOOL GetIEDocument(CComPtr<IHTMLDocument2>& spDoc)
@@ -181,6 +181,10 @@ BOOL GetInternetImageSize(LPCTSTR URL, int& width, int& height)
 // http get请求，注意自行delete buffer
 void HTTPGet(LPCTSTR URL, BYTE** buffer, ULONG* size)
 {
+	if (buffer != NULL)
+		*buffer = NULL;
+	if (size != NULL)
+		*size = 0;
 	CComPtr<IServerXMLHTTPRequest> xml;
 	if (FAILED(xml.CoCreateInstance(__uuidof(ServerXMLHTTP))))
 		return;
@@ -192,11 +196,8 @@ void HTTPGet(LPCTSTR URL, BYTE** buffer, ULONG* size)
 	xml->get_readyState(&state);
 	if (state == 4 && buffer != NULL && size != NULL)
 	{
-		*buffer = NULL;
-		*size   = 0;
-
 		_variant_t body;
-		xml->get_responseBody(&body);
+		xml->get_responseBody(body.GetAddress());
 		BYTE* p;
 		if (SUCCEEDED(SafeArrayAccessData(body.parray, (void**)&p)))
 		{

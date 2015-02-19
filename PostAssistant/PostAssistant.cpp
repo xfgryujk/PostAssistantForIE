@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "PostAssistant.h"
 #include "PostAssistantDlg.h"
+#include "Global.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,7 +37,7 @@ CPostAssistantApp theApp;
 
 
 // CPostAssistantApp 初始化
-#include "Global.h"
+
 BOOL CPostAssistantApp::InitInstance()
 {
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要

@@ -115,6 +115,6 @@ void CRichTextSignPage::UpdateRichTextSigns()
 {
 	CString text;
 	m_edit.GetWindowText(text);
-	SliptString(m_richTextSigns, text, _T("\r\n"));
+	SplitString(m_richTextSigns, text, _T("\r\n"));
 	m_restRichTextSigns = m_richTextSigns.GetSize();
 }
