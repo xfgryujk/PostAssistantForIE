@@ -22,47 +22,6 @@ void SplitString(CStringArray& dst, const CString& src, LPCTSTR slipt)
 	dst.Add(src.Right(src.GetLength() - start));
 }
 
-// 替换字符串
-CString ReplaceString(const CString& src, LPCTSTR oldString, LPCTSTR newString)
-{
-	std::vector<int> poss;
-	int pos = 0;
-	const int len1 = _tcslen(oldString);
-	while ((pos = src.Find(oldString, pos)) != -1) // 统计oldString位置
-	{
-		poss.push_back(pos);
-		pos += len1;
-	}
-	if (poss.size() == 0) // 不用替换
-		return src;
-
-	const int len0 = src.GetLength();
-	const int len2 = _tcslen(newString);
-	const int len2By = len2 * sizeof(TCHAR);
-
-	CString result;
-	BYTE* p = (BYTE*)result.GetBuffer((len0 + (len2 - len1) * poss.size() + 1) * sizeof(TCHAR));
-	pos = 0; // src起始位置
-	for (int oldPos : poss)
-	{
-		// 复制src
-		const int lenBy = (oldPos - pos) * sizeof(TCHAR);
-		memcpy(p, &((LPCTSTR)src)[pos], lenBy);
-		p += lenBy;
-		pos = oldPos + len1;
-		// 复制newString
-		memcpy(p, (LPCTSTR)newString, len2By);
-		p += len2By;
-	}
-	// 复制最后的src
-	const int lenBy = (len0 - pos) * sizeof(TCHAR);
-	memcpy(p, &((LPCTSTR)src)[pos], lenBy);
-	*(LPTSTR)&p[lenBy] = _T('\0');
-
-	result.ReleaseBuffer();
-	return result;
-}
-
 // 枚举寻找Internet Explorer_Server窗口
 static BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam)
 {
@@ -138,12 +97,13 @@ HRESULT EvalJS(CComPtr<IHTMLDocument2>& document, LPCTSTR script, VARIANT* ret)
 // 转义
 void EscapeString(CString& src)
 {
-	src = ReplaceString(src, _T("&"), _T("&amp;"));
-	src = ReplaceString(src, _T(" "), _T("&nbsp;"));
-	src = ReplaceString(src, _T("\""), _T("\\\""));
-	src = ReplaceString(src, _T("'"), _T("\\'"));
-	src = ReplaceString(src, _T("<"), _T("&lt;"));
-	src = ReplaceString(src, _T(">"), _T("&gt;"));
+	src.Replace(_T("&"), _T("&amp;"));
+	src.Replace(_T(" "), _T("&nbsp;"));
+	src.Replace(_T("\""), _T("\\\""));
+	src.Replace(_T("'"), _T("\\'"));
+	src.Replace(_T("'"), _T("\\'"));
+	src.Replace(_T("<"), _T("&lt;"));
+	src.Replace(_T(">"), _T("&gt;"));
 }
 
 // 取网络图片尺寸
