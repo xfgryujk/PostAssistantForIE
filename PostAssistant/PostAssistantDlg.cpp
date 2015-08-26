@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 The MIT License (MIT)
 
 Copyright (c) 2015 xfgryujk
@@ -32,7 +32,7 @@ SOFTWARE.
 #define new DEBUG_NEW
 #endif
 
-// ³£Á¿
+// å¸¸é‡
 static const UINT WM_TASKBARCREATED = RegisterWindowMessage(_T("TaskbarCreated"));
 static const UINT WM_TRAY = WM_APP + 1;
 
@@ -40,10 +40,13 @@ static const UINT WM_TRAY = WM_APP + 1;
 static const TCHAR POST_SCRIPT1[] = _T("UE.instants.ueditorInstant0.getContent=function(){\
 var d=UE.Editor.prototype.getContent.call(this);return d.replace(/&#39;/g,\"'\").replace(/&quot;/g,'\"')\
 .replace(/(^(<br\\/>)+)|((<br\\/>)+$)/g,\"\")+'");
-static const TCHAR NO_OLD_CONTENT_POST_SCRIPT1[] = _T("UE.instants.ueditorInstant0.getContent = function(){return '");
 static const TCHAR KEEP_FORMAT_POST_SCRIPT1[] = _T("UE.instants.ueditorInstant0.getContent=function(){\
 var d=UE.Editor.prototype.getContent.call(this);return d.replace(/&#39;/g,\"'\").replace(/&quot;/g,'\"')\
-.replace(/(^(<br\\/>)+)|((<br\\/>)+$)/g,\"\").replace(/&nbsp;&nbsp;/g,\"¡¡¡¡\").replace(/<br\\/>/g,\"<br>\")+'");
+.replace(/(^(<br\\/>)+)|((<br\\/>)+$)/g,\"\").replace(/&nbsp;&nbsp;/g,\"ã€€ã€€\").replace(/<br\\/>/g,\"<br>\")+'");
+static const TCHAR UNICODE_POST_SCRIPT1[] = _T("function toUnicode(text){var result='';for(var i=0;i<text.length;i++)\
+result+='ğ €¦#'+text.charCodeAt(i)+';';return result.replace(/ğ €¦#60;ğ €¦#98;ğ €¦#114;ğ €¦#47;ğ €¦#62;/g, '<br>')}\
+UE.instants.ueditorInstant0.getContent=function(){return toUnicode('");
+static const TCHAR NO_OLD_CONTENT_POST_SCRIPT1[] = _T("UE.instants.ueditorInstant0.getContent = function(){return '");
 static const TCHAR POST_SCRIPT2[] = _T("'};$(\".poster_submit\")[0].click();");
 
 static const TCHAR VIDEO1[] = _T("<embed class = \"BDE_Flash\" type=\"application/x-shockwave-flash\" \
@@ -61,23 +64,23 @@ static const TCHAR SET_CONTENT_SCRIPT2[] = _T("';");
 #pragma endregion
 
 
-// ¹¹Ôìº¯Êı
+// æ„é€ å‡½æ•°
 CPostAssistantDlg::CPostAssistantDlg(CWnd* pParent /*=NULL*/)
 : CDialog(CPostAssistantDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-	// ³õÊ¼»¯m_pages
+	// åˆå§‹åŒ–m_pages
 	m_pages[0] = &m_settingPage;
 	m_pages[1] = &m_textSignPage;
 	m_pages[2] = &m_richTextSignPage;
 	m_pages[3] = &m_converCodePage;
 	m_pages[4] = &m_aboutPage;
 
-	// ³õÊ¼»¯ÍĞÅÌÍ¼±êÊı¾İ
+	// åˆå§‹åŒ–æ‰˜ç›˜å›¾æ ‡æ•°æ®
 	m_nfData.cbSize				= sizeof(NOTIFYICONDATA);
 	m_nfData.hIcon				= m_hIcon;
-	_tcscpy_s(m_nfData.szTip, _T("·¢ÌùÖúÊÖ"));
+	_tcscpy_s(m_nfData.szTip, _T("å‘è´´åŠ©æ‰‹"));
 	m_nfData.uCallbackMessage	= WM_TRAY;
 	m_nfData.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
 }
@@ -104,12 +107,12 @@ BEGIN_MESSAGE_MAP(CPostAssistantDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CPostAssistantDlg ÏûÏ¢´¦Àí³ÌĞò
+// CPostAssistantDlg æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 
-// Èç¹ûÏò¶Ô»°¿òÌí¼Ó×îĞ¡»¯°´Å¥£¬ÔòĞèÒªÏÂÃæµÄ´úÂë
-//  À´»æÖÆ¸ÃÍ¼±ê¡£  ¶ÔÓÚÊ¹ÓÃÎÄµµ/ÊÓÍ¼Ä£ĞÍµÄ MFC Ó¦ÓÃ³ÌĞò£¬
-//  Õâ½«ÓÉ¿ò¼Ü×Ô¶¯Íê³É¡£
+// å¦‚æœå‘å¯¹è¯æ¡†æ·»åŠ æœ€å°åŒ–æŒ‰é’®ï¼Œåˆ™éœ€è¦ä¸‹é¢çš„ä»£ç 
+//  æ¥ç»˜åˆ¶è¯¥å›¾æ ‡ã€‚  å¯¹äºä½¿ç”¨æ–‡æ¡£/è§†å›¾æ¨¡å‹çš„ MFC åº”ç”¨ç¨‹åºï¼Œ
+//  è¿™å°†ç”±æ¡†æ¶è‡ªåŠ¨å®Œæˆã€‚
 
 void CPostAssistantDlg::OnPaint()
 {
@@ -120,7 +123,7 @@ void CPostAssistantDlg::OnPaint()
 		CStringArray argv;
 		SplitString(argv, AfxGetApp()->m_lpCmdLine, _T(" "));
 		for (int i = 0; i < argv.GetSize(); i++)
-			if (argv[i].MakeLower() == _T("-hide")) // ³õÊ¼Òş²Ø´°¿Ú£¬·ÅÔÚOnInitDialogÎŞĞ§
+			if (argv[i].MakeLower() == _T("-hide")) // åˆå§‹éšè—çª—å£ï¼Œæ”¾åœ¨OnInitDialogæ— æ•ˆ
 			{
 				ShowWindow(SW_HIDE);
 				Shell_NotifyIcon(NIM_ADD, &m_nfData);
@@ -131,11 +134,11 @@ void CPostAssistantDlg::OnPaint()
 
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // ÓÃÓÚ»æÖÆµÄÉè±¸ÉÏÏÂÎÄ
+		CPaintDC dc(this); // ç”¨äºç»˜åˆ¶çš„è®¾å¤‡ä¸Šä¸‹æ–‡
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// Ê¹Í¼±êÔÚ¹¤×÷Çø¾ØĞÎÖĞ¾ÓÖĞ
+		// ä½¿å›¾æ ‡åœ¨å·¥ä½œåŒºçŸ©å½¢ä¸­å±…ä¸­
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -143,7 +146,7 @@ void CPostAssistantDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// »æÖÆÍ¼±ê
+		// ç»˜åˆ¶å›¾æ ‡
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -152,35 +155,35 @@ void CPostAssistantDlg::OnPaint()
 	}
 }
 
-//µ±ÓÃ»§ÍÏ¶¯×îĞ¡»¯´°¿ÚÊ±ÏµÍ³µ÷ÓÃ´Ëº¯ÊıÈ¡µÃ¹â±ê
-//ÏÔÊ¾¡£
+//å½“ç”¨æˆ·æ‹–åŠ¨æœ€å°åŒ–çª—å£æ—¶ç³»ç»Ÿè°ƒç”¨æ­¤å‡½æ•°å–å¾—å…‰æ ‡
+//æ˜¾ç¤ºã€‚
 HCURSOR CPostAssistantDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 #pragma endregion
 
-// ³õÊ¼»¯
+// åˆå§‹åŒ–
 BOOL CPostAssistantDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	// ÉèÖÃ´Ë¶Ô»°¿òµÄÍ¼±ê¡£  µ±Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú²»ÊÇ¶Ô»°¿òÊ±£¬¿ò¼Ü½«×Ô¶¯
-	//  Ö´ĞĞ´Ë²Ù×÷
-	SetIcon(m_hIcon, TRUE);			// ÉèÖÃ´óÍ¼±ê
-	SetIcon(m_hIcon, FALSE);		// ÉèÖÃĞ¡Í¼±ê
+	// è®¾ç½®æ­¤å¯¹è¯æ¡†çš„å›¾æ ‡ã€‚  å½“åº”ç”¨ç¨‹åºä¸»çª—å£ä¸æ˜¯å¯¹è¯æ¡†æ—¶ï¼Œæ¡†æ¶å°†è‡ªåŠ¨
+	//  æ‰§è¡Œæ­¤æ“ä½œ
+	SetIcon(m_hIcon, TRUE);			// è®¾ç½®å¤§å›¾æ ‡
+	SetIcon(m_hIcon, FALSE);		// è®¾ç½®å°å›¾æ ‡
 
-	// ³õÊ¼»¯ÍĞÅÌ´°¿Ú¾ä±ú
+	// åˆå§‹åŒ–æ‰˜ç›˜çª—å£å¥æŸ„
 	m_nfData.hWnd = m_hWnd;
 
-	// ³õÊ¼»¯m_tab
-	m_tab.InsertItem(0, _T("ÉèÖÃ"));
-	m_tab.InsertItem(1, _T("ÎÄ×ÖÇ©Ãû"));
-	m_tab.InsertItem(2, _T("¸»ÎÄ±¾Ç©Ãû"));
-	m_tab.InsertItem(3, _T("±àÂë×ª»»"));
-	m_tab.InsertItem(4, _T("°ïÖú&&¹ØÓÚ"));
+	// åˆå§‹åŒ–m_tab
+	m_tab.InsertItem(0, _T("è®¾ç½®"));
+	m_tab.InsertItem(1, _T("æ–‡å­—ç­¾å"));
+	m_tab.InsertItem(2, _T("å¯Œæ–‡æœ¬ç­¾å"));
+	m_tab.InsertItem(3, _T("ç¼–ç è½¬æ¢"));
+	m_tab.InsertItem(4, _T("å¸®åŠ©&&å…³äº"));
 
-	// ³õÊ¼»¯¸÷Ò³
+	// åˆå§‹åŒ–å„é¡µ
 	m_settingPage.Create(IDD_SETTING, &m_tab);
 	m_textSignPage.Create(IDD_TEXTSIGN, &m_tab);
 	m_richTextSignPage.Create(IDD_RICHTEXTSIGN, &m_tab);
@@ -196,22 +199,22 @@ BOOL CPostAssistantDlg::OnInitDialog()
 	m_converCodePage.SetWindowPos(NULL, rect.left, rect.top, rect.Width(), rect.Height(), SWP_HIDEWINDOW);
 	m_aboutPage.SetWindowPos(NULL, rect.left, rect.top, rect.Width(), rect.Height(), SWP_HIDEWINDOW);
 
-	// ¶ÁÈ¡ÉèÖÃ
+	// è¯»å–è®¾ç½®
 	TCHAR tmpText[10];
-	// Ê¹ÓÃÎÄ×ÖÇ©Ãû
-	GetPrivateProfileString(_T("ÉèÖÃ"), _T("text"), _T("1"), tmpText, _countof(tmpText), PROFILE_PATH);
+	// ä½¿ç”¨æ–‡å­—ç­¾å
+	GetPrivateProfileString(_T("è®¾ç½®"), _T("text"), _T("1"), tmpText, _countof(tmpText), PROFILE_PATH);
 	m_settingPage.m_textSignCheck.SetCheck(tmpText[0] == _T('1'));
-	// Ê¹ÓÃ¸»ÎÄ±¾Ç©Ãû
-	GetPrivateProfileString(_T("ÉèÖÃ"), _T("richtext"), _T("1"), tmpText, _countof(tmpText), PROFILE_PATH);
+	// ä½¿ç”¨å¯Œæ–‡æœ¬ç­¾å
+	GetPrivateProfileString(_T("è®¾ç½®"), _T("richtext"), _T("1"), tmpText, _countof(tmpText), PROFILE_PATH);
 	m_settingPage.m_richTextSignCheck.SetCheck(tmpText[0] == _T('1'));
-	// ±£³Ö¸ñÊ½
-	GetPrivateProfileString(_T("ÉèÖÃ"), _T("KeepFormat"), _T("0"), tmpText, _countof(tmpText), PROFILE_PATH);
+	// ä¿æŒæ ¼å¼
+	GetPrivateProfileString(_T("è®¾ç½®"), _T("KeepFormat"), _T("0"), tmpText, _countof(tmpText), PROFILE_PATH);
 	m_settingPage.m_keepFormatCheck.SetCheck(tmpText[0] == _T('1'));
-	// ·¢ÌûÈÈ¼ü
-	m_settingPage.m_postHotkeyCombo.SetCurSel(GetPrivateProfileInt(_T("ÉèÖÃ"), _T("ft"), 'Q' - 'A', PROFILE_PATH));
-	// ·¢·±Ìå×ÖÈÈ¼ü
-	m_settingPage.m_unicodePostHotkeyCombo.SetCurSel(GetPrivateProfileInt(_T("ÉèÖÃ"), _T("ftz"), 'W' - 'A', PROFILE_PATH));
-	// ¿ª»úÆô¶¯
+	// å‘å¸–çƒ­é”®
+	m_settingPage.m_postHotkeyCombo.SetCurSel(GetPrivateProfileInt(_T("è®¾ç½®"), _T("ft"), 'Q' - 'A', PROFILE_PATH));
+	// å‘ç¹ä½“å­—çƒ­é”®
+	m_settingPage.m_unicodePostHotkeyCombo.SetCurSel(GetPrivateProfileInt(_T("è®¾ç½®"), _T("ftz"), 'W' - 'A', PROFILE_PATH));
+	// å¼€æœºå¯åŠ¨
 	::CRegKey reg;
 	if (reg.Open(HKEY_LOCAL_MACHINE, _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"), KEY_QUERY_VALUE) == ERROR_SUCCESS)
 	{
@@ -224,7 +227,7 @@ BOOL CPostAssistantDlg::OnInitDialog()
 		exePath.ReleaseBuffer();
 		m_settingPage.m_autoRunCheck.SetCheck(value.Find(exePath) != -1);
 	}
-	// ÎÄ×ÖÇ©Ãû
+	// æ–‡å­—ç­¾å
 	CFile file;
 	CStringA buffer;
 	if (file.Open(TEXT_SIGNS_PATH, CFile::typeText | CFile::modeRead))
@@ -238,7 +241,7 @@ BOOL CPostAssistantDlg::OnInitDialog()
 		m_textSignPage.m_edit.SetWindowText(CString(buffer));
 	}
 	m_textSignPage.UpdateTextSigns();
-	// ¸»ÎÄ±¾Ç©Ãû
+	// å¯Œæ–‡æœ¬ç­¾å
 	if (file.Open(RICH_TEXT_SIGNS_PATH, CFile::typeText | CFile::modeRead))
 	{
 		const ULONGLONG len = file.GetLength();
@@ -251,37 +254,37 @@ BOOL CPostAssistantDlg::OnInitDialog()
 	}
 	m_richTextSignPage.UpdateRichTextSigns();
 
-	// ×¢²áÈÈ¼ü
+	// æ³¨å†Œçƒ­é”®
 	m_settingPage.OnCbnSelchangeCombo1();
 	m_settingPage.OnCbnSelchangeCombo2();
 	RegisterHotKey(m_hWnd, HOTKEY_HTML_POST, MOD_CONTROL | MOD_SHIFT | MOD_ALT, VK_F11);
 
-	return TRUE;  // ³ı·Ç½«½¹µãÉèÖÃµ½¿Ø¼ş£¬·ñÔò·µ»Ø TRUE
+	return TRUE;  // é™¤éå°†ç„¦ç‚¹è®¾ç½®åˆ°æ§ä»¶ï¼Œå¦åˆ™è¿”å› TRUE
 }
 
-// ÊÍ·Å
+// é‡Šæ”¾
 void CPostAssistantDlg::OnDestroy()
 {
 	CDialog::OnDestroy();
 
-	// ÍĞÅÌÍ¼±ê
+	// æ‰˜ç›˜å›¾æ ‡
 	Shell_NotifyIcon(NIM_DELETE, &m_nfData);
 }
 
 #pragma region UI
-// ´°¿Ú /////////////////////////////////////////////////////////////////////////////////
+// çª—å£ /////////////////////////////////////////////////////////////////////////////////
 
-// ÆÁ±ÎEsc¹Ø±Õ´°¿Ú
+// å±è”½Escå…³é—­çª—å£
 void CPostAssistantDlg::OnCancel()
 {
 }
 
-// ÆÁ±Î»Ø³µ¹Ø±Õ´°¿Ú
+// å±è”½å›è½¦å…³é—­çª—å£
 void CPostAssistantDlg::OnOK()
 {
 }
 
-// Ïú»Ù´°¿Ú
+// é”€æ¯çª—å£
 void CPostAssistantDlg::OnClose()
 {
 	DestroyWindow();
@@ -289,7 +292,7 @@ void CPostAssistantDlg::OnClose()
 	CDialog::OnClose();
 }
 
-// ÇĞ»»±êÇ©
+// åˆ‡æ¢æ ‡ç­¾
 void CPostAssistantDlg::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	*pResult = 0;
@@ -299,7 +302,7 @@ void CPostAssistantDlg::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_pages[i]->ShowWindow(i == index ? SW_SHOW : SW_HIDE);
 }
 
-// ÏŞÖÆ×îĞ¡³ß´ç
+// é™åˆ¶æœ€å°å°ºå¯¸
 void CPostAssistantDlg::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
 	lpMMI->ptMinTrackSize.x = 384;
@@ -308,13 +311,13 @@ void CPostAssistantDlg::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 	CDialog::OnGetMinMaxInfo(lpMMI);
 }
 
-// ¸Ä±ä³ß´ç
+// æ”¹å˜å°ºå¯¸
 void CPostAssistantDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
 
 	CRect rect;
-	GetClientRect(&rect); // Ä¬ÈÏ368 * 261
+	GetClientRect(&rect); // é»˜è®¤368 * 261
 	m_tab.SetWindowPos(NULL, 0, 0, rect.Width() - 21, rect.Height() - 21, SWP_NOMOVE | SWP_NOREDRAW);
 
 	m_tab.GetClientRect(&rect);
@@ -328,12 +331,12 @@ void CPostAssistantDlg::OnSize(UINT nType, int cx, int cy)
 	Invalidate();
 }
 
-// ÍĞÅÌ /////////////////////////////////////////////////////////////////////////////////
+// æ‰˜ç›˜ /////////////////////////////////////////////////////////////////////////////////
 
-// ×îĞ¡»¯
+// æœ€å°åŒ–
 void CPostAssistantDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if (nID == SC_MINIMIZE) // ×îĞ¡»¯Ê±Òş²Ø´°¿Ú
+	if (nID == SC_MINIMIZE) // æœ€å°åŒ–æ—¶éšè—çª—å£
 	{
 		ShowWindow(SW_HIDE);
 		Shell_NotifyIcon(NIM_ADD, &m_nfData);
@@ -343,10 +346,10 @@ void CPostAssistantDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	CDialog::OnSysCommand(nID, lParam);
 }
 
-// ÍĞÅÌÏûÏ¢
+// æ‰˜ç›˜æ¶ˆæ¯
 LRESULT CPostAssistantDlg::OnTray(WPARAM wParam, LPARAM lParam)
 {
-	if (lParam == WM_LBUTTONDOWN) // µ¥»÷ÏÔÊ¾´°¿Ú
+	if (lParam == WM_LBUTTONDOWN) // å•å‡»æ˜¾ç¤ºçª—å£
 	{
 		Shell_NotifyIcon(NIM_DELETE, &m_nfData);
 		ShowWindow(SW_SHOW);
@@ -355,7 +358,7 @@ LRESULT CPostAssistantDlg::OnTray(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-// ÈÎÎñÀ¸ÖØ½¨
+// ä»»åŠ¡æ é‡å»º
 LRESULT CPostAssistantDlg::OnTaskBarCreated(WPARAM wParam, LPARAM lParam)
 {
 	if (!IsWindowVisible())
@@ -363,9 +366,9 @@ LRESULT CPostAssistantDlg::OnTaskBarCreated(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-// ÈÈ¼ü /////////////////////////////////////////////////////////////////////////////////
+// çƒ­é”® /////////////////////////////////////////////////////////////////////////////////
 
-// ÈÈ¼ü
+// çƒ­é”®
 void CPostAssistantDlg::OnHotKey(UINT nHotKeyId, UINT nKey1, UINT nKey2)
 {
 	switch (nHotKeyId)
@@ -385,7 +388,7 @@ void CPostAssistantDlg::OnHotKey(UINT nHotKeyId, UINT nKey1, UINT nKey2)
 }
 #pragma endregion
 
-// ÆÕÍ¨·¢Ìû
+// æ™®é€šå‘å¸–
 void CPostAssistantDlg::Post()
 {
 	UnregisterHotKey(AfxGetMainWnd()->m_hWnd, HOTKEY_POST);
@@ -402,13 +405,32 @@ void CPostAssistantDlg::Post()
 	RegisterHotKey(AfxGetMainWnd()->m_hWnd, HOTKEY_POST, MOD_CONTROL, 'A' + m_settingPage.m_postHotkeyCombo.GetCurSel());
 }
 
-// UnicodeÂë
+// Unicodeç 
 void CPostAssistantDlg::UnicodePost()
 {
-	// ÔİÊ±Ã»°ì·¨
+	UnregisterHotKey(AfxGetMainWnd()->m_hWnd, HOTKEY_UNICODE_POST);
+
+	CComPtr<IHTMLDocument2> document;
+	if (GetIEDocument(document) && IsTieba(document))
+	{
+		CString content = _T("ç­æƒ‡æ¶…æ§ƒ");
+		CInputDlg inputDlg(_T("è¦å‘é€çš„ç¹ä½“å­—å†…å®¹"), &content);
+		if (inputDlg.DoModal() == IDOK && content != _T(""))
+		{
+			// è½¬ä¹‰
+			content.Replace(_T("\r\n"), _T("<br>"));
+
+			CString script = UNICODE_POST_SCRIPT1 + content + _T("')+'");
+			AddSign(script);
+			script += POST_SCRIPT2;
+			EvalJS(document, script);
+		}
+	}
+
+	RegisterHotKey(AfxGetMainWnd()->m_hWnd, HOTKEY_UNICODE_POST, MOD_CONTROL, 'A' + m_settingPage.m_unicodePostHotkeyCombo.GetCurSel());
 }
 
-// ±à¼­Ô´Âë
+// ç¼–è¾‘æºç 
 void CPostAssistantDlg::HTMLPost()
 {
 	UnregisterHotKey(AfxGetMainWnd()->m_hWnd, HOTKEY_HTML_POST);
@@ -416,14 +438,14 @@ void CPostAssistantDlg::HTMLPost()
 	CComPtr<IHTMLDocument2> document;
 	if (GetIEDocument(document) && IsTieba(document))
 	{
-		// È¡Ô­·¢Ìû¿òÄÚÈİHTML
+		// å–åŸå‘å¸–æ¡†å†…å®¹HTML
 		_variant_t vContent;
 		EvalJS(document, GET_CONTENT_SCRIPT, &vContent);
 		CString content = vContent;
-		CInputDlg inputDlg(_T("ÎÄ±¾¿òÔ´Âë"), &content);
+		CInputDlg inputDlg(_T("æ–‡æœ¬æ¡†æºç "), &content);
 		if (inputDlg.DoModal() == IDOK && content != _T(""))
 		{
-			// ×ªÒå
+			// è½¬ä¹‰
 			content.Replace(_T("\r\n"), _T("<br>"));
 			content.Replace(_T("\\"), _T("\\\\"));
 			content.Replace(_T("'"), _T("\\'"));
@@ -439,9 +461,9 @@ void CPostAssistantDlg::HTMLPost()
 	RegisterHotKey(m_hWnd, HOTKEY_HTML_POST, MOD_CONTROL | MOD_SHIFT | MOD_ALT, VK_F11);
 }
 
-// ÔÓÏî /////////////////////////////////////////////////////////////////////////////////
+// æ‚é¡¹ /////////////////////////////////////////////////////////////////////////////////
 
-// JS¼ÓÉÏÇ©Ãû
+// JSåŠ ä¸Šç­¾å
 void CPostAssistantDlg::AddSign(CString& script)
 {
 	BOOL hasTextSign = m_settingPage.m_textSignCheck.GetCheck() && m_textSignPage.m_edit.GetWindowTextLengthW() > 0;
@@ -451,7 +473,7 @@ void CPostAssistantDlg::AddSign(CString& script)
 
 	script += _T("<br><br><br>");
 
-	// ÎÄ×ÖÇ©Ãû
+	// æ–‡å­—ç­¾å
 	if (hasTextSign)
 	{
 		CString sign = GetUnrepeatedElement(m_textSignPage.m_textSigns, m_textSignPage.m_restTextSigns);
@@ -459,30 +481,30 @@ void CPostAssistantDlg::AddSign(CString& script)
 		script += sign;
 	}
 
-	// ¸»ÎÄ±¾Ç©Ãû
+	// å¯Œæ–‡æœ¬ç­¾å
 	if (hasRichTextSign)
 	{
 		if (hasTextSign)
 			script += _T("<br>");
 		CString sign = GetUnrepeatedElement(m_richTextSignPage.m_richTextSigns, m_richTextSignPage.m_restRichTextSigns);
 		CString ext = sign.Right(4).MakeLower();
-		if (!(ext == ".jpg" || ext == ".gif" || ext == ".png")) // ÊÇÊÓÆµ
+		if (!(ext == ".jpg" || ext == ".gif" || ext == ".png")) // æ˜¯è§†é¢‘
 			script += VIDEO1 + sign + VIDEO2;
-		else // ÊÇÍ¼Æ¬
+		else // æ˜¯å›¾ç‰‡
 		{
-			// È¡Í¼Æ¬³ß´ç
+			// å–å›¾ç‰‡å°ºå¯¸
 			TCHAR tmp[20];
-			GetPrivateProfileString(_T("Í¼Æ¬³ß´ç"), sign, _T(""), tmp, _countof(tmp), PROFILE_PATH);
+			GetPrivateProfileString(_T("å›¾ç‰‡å°ºå¯¸"), sign, _T(""), tmp, _countof(tmp), PROFILE_PATH);
 			int width, height;
-			if (_stscanf_s(tmp, _T("%dx%d"), &width, &height) != 2) // ÎŞ³ß´ç¼ÇÂ¼
+			if (_stscanf_s(tmp, _T("%dx%d"), &width, &height) != 2) // æ— å°ºå¯¸è®°å½•
 			{
 				if(!GetInternetImageSize(sign, width, height))
-					AfxMessageBox(_T("¨r(¨s_¨t)¨qÍ¼Æ¬³ß´ç»ñÈ¡Ê§°Ü(ÍøÂçÎÊÌâ£¿)£¬Ä¬ÈÏ500x500"), MB_ICONINFORMATION);
+					AfxMessageBox(_T("â•®(â•¯_â•°)â•­å›¾ç‰‡å°ºå¯¸è·å–å¤±è´¥(ç½‘ç»œé—®é¢˜ï¼Ÿ)ï¼Œé»˜è®¤500x500"), MB_ICONINFORMATION);
 				CString text;
 				text.Format(_T("%dx%d"), width, height);
-				WritePrivateProfileString(_T("Í¼Æ¬³ß´ç"), sign, text, PROFILE_PATH);
+				WritePrivateProfileString(_T("å›¾ç‰‡å°ºå¯¸"), sign, text, PROFILE_PATH);
 			}
-			// ×î´ó³ß´ç560*600
+			// æœ€å¤§å°ºå¯¸560*600
 			if (width > 560 || height > 600)
 			{
 				float scale1 = 560.0f / (float)width;
@@ -499,7 +521,7 @@ void CPostAssistantDlg::AddSign(CString& script)
 	}
 }
 
-// ÊÇÌù°ÉÍøÖ·
+// æ˜¯è´´å§ç½‘å€
 BOOL CPostAssistantDlg::IsTieba(CComPtr<IHTMLDocument2>& document)
 {
 	BSTR url_;

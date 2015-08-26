@@ -125,7 +125,7 @@ void CSettingPage::OnCbnSelchangeCombo1()
 // 发Unicode码热键
 void CSettingPage::OnCbnSelchangeCombo2()
 {
-	/*int index = m_unicodePostHotkeyCombo.GetCurSel();
+	int index = m_unicodePostHotkeyCombo.GetCurSel();
 	if (index != CB_ERR)
 	{
 		if (index == m_postHotkeyCombo.GetCurSel())
@@ -139,7 +139,7 @@ void CSettingPage::OnCbnSelchangeCombo2()
 		CString text;
 		text.Format(_T("%d"), index);
 		WritePrivateProfileString(_T("设置"), _T("ftz"), text, PROFILE_PATH);
-	}*/
+	}
 }
 
 // 开机启动
